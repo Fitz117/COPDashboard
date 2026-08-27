@@ -1,0 +1,10 @@
+{
+  "description": "Interactive dashboard integrating Hong Kong government data with 2D and 3D maps to visualize department info, CCTV feeds, and custom map annotations.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
