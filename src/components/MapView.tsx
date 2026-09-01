@@ -459,7 +459,7 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
 
     void (async () => {
       if (!GOOGLE_MAPS_API_KEY) {
-        setGoogleError(null);
+        setGoogleError('Google Maps API key 未設定');
         return;
       }
 
@@ -550,9 +550,9 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
 
     void (async () => {
       if (!GOOGLE_MAPS_API_KEY) {
-        setGoogleError(null);
-        return;
-      }
+      setGoogleError('Google Maps API key 未設定');
+      return;
+    }
 
       try {
         setGoogleError(null);
