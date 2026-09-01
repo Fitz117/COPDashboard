@@ -176,7 +176,7 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
   const deptMarkersRef = useRef<L.LayerGroup>(L.layerGroup());
   const mapMarkersLayerRef = useRef<L.LayerGroup>(L.layerGroup());
   const basemapLayerRef = useRef<L.TileLayer | null>(null);
-  const labelLayerRef = useRef<L.TileLayer | null>(null);
+  // 標籤圖層因 CORS 問題已移除
   const googleMapRef = useRef<any>(null);
   const googleInfoWindowRef = useRef<any>(null);
   const googleMarkersRef = useRef<any[]>([]);
@@ -255,12 +255,8 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
     hkLayer.addTo(map);
     basemapLayerRef.current = hkLayer;
 
-    const labelLayer = L.tileLayer(
-      'https://mapapi.geodata.gov.hk/gs/api/v1.0.0/xyz/label/wgs84/{z}/{x}/{y}.png',
-      { maxZoom: 19, crossOrigin: true, zIndex: 10 }
-    );
-    labelLayer.addTo(map);
-    labelLayerRef.current = labelLayer;
+    // 標籤圖層因 CORS 問題已移除
+    labelLayerRef.current = null;
 
     drawnItemsRef.current.addTo(map);
     deptMarkersRef.current.addTo(map);
@@ -367,7 +363,7 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
     const map = mapRef.current;
 
     if (basemapLayerRef.current) map.removeLayer(basemapLayerRef.current);
-    if (labelLayerRef.current) map.removeLayer(labelLayerRef.current);
+    // 標籤圖層因 CORS 問題已移除，不再需要移除
 
     let newBase: L.TileLayer;
     if (mapSurface === 'lands-2d') {
@@ -394,16 +390,8 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
     newBase.addTo(map);
     basemapLayerRef.current = newBase;
 
-    if (mapSurface === 'lands-2d') {
-      const lbl = L.tileLayer(
-        'https://mapapi.geodata.gov.hk/gs/api/v1.0.0/xyz/label/wgs84/{z}/{x}/{y}.png',
-        { maxZoom: 19, crossOrigin: true, zIndex: 10 }
-      );
-      lbl.addTo(map);
-      labelLayerRef.current = lbl;
-    } else {
-      labelLayerRef.current = null;
-    }
+    // 標籤圖層因 CORS 問題已移除
+    labelLayerRef.current = null;
   }, [mapSurface]);
 
   // Fly to selected department on Leaflet
