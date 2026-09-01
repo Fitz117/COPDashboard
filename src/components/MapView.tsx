@@ -131,11 +131,10 @@ function loadGoogleMapsApi(apiKey: string): Promise<GoogleMapsApi> {
     const params = new URLSearchParams({
       key: apiKey,
       v: 'weekly',
-      loading: 'async',
+      libraries: 'maps,places',
       language: 'zh-TW',
       region: 'HK',
       callback: callbackName,
-      libraries: 'maps',
     });
 
     script.src = `https://maps.googleapis.com/maps/api/js?${params.toString()}`;
