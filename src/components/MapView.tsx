@@ -135,6 +135,7 @@ function loadGoogleMapsApi(apiKey: string): Promise<GoogleMapsApi> {
       language: 'zh-TW',
       region: 'HK',
       callback: callbackName,
+      libraries: 'maps',
     });
 
     script.src = `https://maps.googleapis.com/maps/api/js?${params.toString()}`;
@@ -452,7 +453,7 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
       try {
         setGoogleError(null);
         const google = await loadGoogleMapsApi(GOOGLE_MAPS_API_KEY);
-        const { Map } = await google.maps.importLibrary('maps');
+        // 已在 URL 參數中指定 libraries，不需要再次 importLibrary
         if (cancelled) return;
 
         const center = toGoogleCenter(selectedDept?.mapCenter ?? HK_CENTER);
@@ -543,7 +544,7 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
       try {
         setGoogleError(null);
         const google = await loadGoogleMapsApi(GOOGLE_MAPS_API_KEY);
-        const { Map3DElement } = await google.maps.importLibrary('maps3d');
+        // 已在 URL 參數中指定 libraries，不需要再次 importLibrary
         if (cancelled) return;
 
         const center = selectedDept?.mapCenter ?? HK_CENTER;
@@ -709,7 +710,7 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
               }}
             >
               <option value="lands-2d">LANDS 2D</option>
-              
+              <option value="lands-3d">LANDS 3D</option>
               <option value="satellite">衛星</option>
               <option value="dark">夜間</option>
               <option value="google-2d">Google 2D</option>
