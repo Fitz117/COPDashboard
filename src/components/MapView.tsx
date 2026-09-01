@@ -59,7 +59,7 @@ interface GoogleMapsApi {
 
 const HK_CENTER: [number, number] = [22.3193, 114.1694];
 const HK_ZOOM = 12;
-const LANDS_3D_URL = 'https://3dmap.gov.hk';
+const LANDS_3D_URL = 'https://3d.map.gov.hk/?l=zh-HK';
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY?.trim() ?? '';
 const GOOGLE_MAPS_MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID?.trim() ?? '';
 const GOOGLE_MAPS_3D_MAP_ID =
