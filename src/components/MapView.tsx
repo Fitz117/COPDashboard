@@ -59,7 +59,7 @@ interface GoogleMapsApi {
 
 const HK_CENTER: [number, number] = [22.3193, 114.1694];
 const HK_ZOOM = 12;
-const LANDS_3D_URL = 'https://3d.map.gov.hk/mapviewer/app/?l=zh-HK';
+const LANDS_3D_URL = 'https://3dmap.gov.hk';
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY?.trim() ?? '';
 const GOOGLE_MAPS_MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID?.trim() ?? '';
 const GOOGLE_MAPS_3D_MAP_ID =
@@ -166,6 +166,7 @@ function getCameraStatusColor(status: string) {
 
 export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const lands3DContainerRef = useRef<HTMLIFrameElement>(null);
   const google2DContainerRef = useRef<HTMLDivElement>(null);
   const google3DContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
@@ -891,25 +892,14 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
           ref={containerRef}
           className={`absolute inset-0 ${isReadOnlySurface ? 'hidden' : ''}`}
         />
-        {/* Lands 3D 使用另開新視窗方式，避免 iframe 嵌入限制 */}
-        {mapSurface === 'lands-3d' && (
-          <div
-            className="absolute inset-0 flex items-center justify-center"
-            style={{ background: '#07091a' }}
-          >
-            <button
-              onClick={() => window.open(LANDS_3D_URL, '_blank', 'noopener,noreferrer')}
-              className="px-6 py-3 text-sm rounded border"
-              style={{
-                background: 'rgba(7,9,26,0.85)',
-                borderColor: '#182840',
-                color: '#00c8ff',
-              }}
-            >
-              Lands 3D 無法嵌入，請點擊這裡開啟
-            </button>
-          </div>
-        )}
+        {/* Lands 3D - 使用 iframe 內嵌顯示 */}
+        <iframe
+          ref={lands3DContainerRef}
+          title="Lands 3D Map"
+          src={LANDS_3D_URL}
+          className={`absolute inset-0 border-0 ${mapSurface === 'lands-3d' ? '' : 'hidden'}`}
+          referrerPolicy="no-referrer-when-downgrade"
+        />
         <div
           ref={google2DContainerRef}
           className={`absolute inset-0 ${mapSurface === 'google-2d' ? '' : 'hidden'}`}
