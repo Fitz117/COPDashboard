@@ -256,7 +256,6 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
     basemapLayerRef.current = hkLayer;
 
     // 標籤圖層因 CORS 問題已移除
-    labelLayerRef.current = null;
 
     drawnItemsRef.current.addTo(map);
     deptMarkersRef.current.addTo(map);
@@ -391,7 +390,6 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
     basemapLayerRef.current = newBase;
 
     // 標籤圖層因 CORS 問題已移除
-    labelLayerRef.current = null;
   }, [mapSurface]);
 
   // Fly to selected department on Leaflet
