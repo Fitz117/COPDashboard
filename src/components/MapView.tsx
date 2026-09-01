@@ -909,7 +909,7 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
         <iframe
           ref={lands3DContainerRef}
           title="Lands 3D Map"
-          src={mapSurface === 'lands-3d' ? LANDS_3D_URL : 'about:blank'}
+          src={LANDS_3D_URL}
           className={`absolute inset-0 border-0 ${mapSurface === 'lands-3d' ? '' : 'hidden'}`}
           referrerPolicy="no-referrer-when-downgrade"
         />
