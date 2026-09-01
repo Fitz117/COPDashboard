@@ -702,17 +702,6 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
     { mode: 'marker' as DrawMode, icon: '📍', label: '新增標示' },
   ];
 
-  const surfaceLabel =
-    mapSurface === 'lands-2d'
-      ? 'LANDS MAP · 2D'
-      : mapSurface === 'lands-3d'
-        ? 'LANDS MAP · 3D'
-        : mapSurface === 'google-2d'
-      ? 'GOOGLE MAP · 2D'
-      : mapSurface === 'google-3d'
-        ? 'GOOGLE MAP · 3D'
-        : 'LANDS MAP';
-
   return (
     <div className="flex flex-col h-full relative" style={{ background: '#07091a' }}>
       <div
@@ -720,32 +709,41 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
         style={{ borderColor: '#182840', background: '#0c1228' }}
       >
         <div className="flex min-w-max flex-wrap items-center gap-2 px-3 py-2">
-          <div
-            className="flex rounded overflow-hidden border"
-            style={{ borderColor: '#182840' }}
-          >
-          {(
-            [
-              ['lands-2d', 'Lands 2D'],
-              ['lands-3d', 'Lands 3D'],
-              ['satellite', '衛星'],
-              ['dark', '夜間'],
-              ['google-2d', 'Google 2D'],
-              ['google-3d', 'Google 3D'],
-            ] as const
-          ).map(([surface, label]) => (
-            <button
-              key={surface}
-              onClick={() => setMapSurface(surface)}
-              className="px-2 py-1 text-xs transition-colors"
+          {/* 地圖類型下拉式選單 */}
+          <div className="relative">
+            <select
+              value={mapSurface}
+              onChange={e => setMapSurface(e.target.value as MapSurface)}
+              className="appearance-none pl-3 pr-8 py-1 text-xs rounded border focus:outline-none focus:ring-1 focus:ring-cyan-400"
               style={{
-                background: mapSurface === surface ? '#182840' : 'transparent',
-                color: mapSurface === surface ? '#00c8ff' : '#506070',
+                borderColor: '#182840',
+                background: mapSurface === 'lands-2d' ? '#182840' : 'transparent',
+                color: mapSurface === 'lands-2d' ? '#00c8ff' : '#506070',
+                fontFamily: "'Noto Sans HK', sans-serif",
               }}
             >
-              {label}
-            </button>
-          ))}
+              <option value="lands-2d">LANDS 2D</option>
+              <option value="lands-3d">LANDS 3D</option>
+              <option value="satellite">衛星</option>
+              <option value="dark">夜間</option>
+              <option value="google-2d">Google 2D</option>
+              <option value="google-3d">Google 3D</option>
+            </select>
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg
+                className="w-3 h-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
           </div>
 
           <div className="w-px h-5 self-center" style={{ background: '#182840' }} />
