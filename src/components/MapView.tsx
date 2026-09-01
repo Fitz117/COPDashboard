@@ -166,7 +166,6 @@ function getCameraStatusColor(status: string) {
 
 export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const lands3DContainerRef = useRef<HTMLIFrameElement>(null);
   const google2DContainerRef = useRef<HTMLDivElement>(null);
   const google3DContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
@@ -906,13 +905,25 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
           ref={containerRef}
           className={`absolute inset-0 ${isReadOnlySurface ? 'hidden' : ''}`}
         />
-        <iframe
-          ref={lands3DContainerRef}
-          title="Lands 3D Map"
-          src={LANDS_3D_URL}
-          className={`absolute inset-0 border-0 ${mapSurface === 'lands-3d' ? '' : 'hidden'}`}
-          referrerPolicy="no-referrer-when-downgrade"
-        />
+        {/* Lands 3D 使用另開新視窗方式，避免 iframe 嵌入限制 */}
+        {mapSurface === 'lands-3d' && (
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ background: '#07091a' }}
+          >
+            <button
+              onClick={() => window.open(LANDS_3D_URL, '_blank', 'noopener,noreferrer')}
+              className="px-6 py-3 text-sm rounded border"
+              style={{
+                background: 'rgba(7,9,26,0.85)',
+                borderColor: '#182840',
+                color: '#00c8ff',
+              }}
+            >
+              Lands 3D 無法嵌入，請點擊這裡開啟
+            </button>
+          </div>
+        )}
         <div
           ref={google2DContainerRef}
           className={`absolute inset-0 ${mapSurface === 'google-2d' ? '' : 'hidden'}`}
@@ -946,22 +957,6 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
               </button>
             </div>
             <LayerPanelContent activeLayers={activeLayers} />
-          </div>
-        )}
-
-        {mapSurface === 'lands-3d' && (
-          <div className="absolute top-3 right-3 z-40 flex gap-2">
-            <button
-              onClick={() => window.open(LANDS_3D_URL, '_blank', 'noopener,noreferrer')}
-              className="px-2 py-1 text-xs rounded border"
-              style={{
-                background: 'rgba(7,9,26,0.85)',
-                borderColor: '#182840',
-                color: '#00c8ff',
-              }}
-            >
-              另開 Lands 3D
-            </button>
           </div>
         )}
 
