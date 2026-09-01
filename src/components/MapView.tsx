@@ -709,7 +709,7 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
               }}
             >
               <option value="lands-2d">LANDS 2D</option>
-              <option value="lands-3d">LANDS 3D</option>
+              
               <option value="satellite">衛星</option>
               <option value="dark">夜間</option>
               <option value="google-2d">Google 2D</option>
