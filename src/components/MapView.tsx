@@ -59,7 +59,6 @@ interface GoogleMapsApi {
 
 const HK_CENTER: [number, number] = [22.3193, 114.1694];
 const HK_ZOOM = 12;
-const LANDS_3D_URL = 'https://3d.map.gov.hk/?l=zh-HK';
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY?.trim() ?? '';
 const GOOGLE_MAPS_MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID?.trim() ?? '';
 const GOOGLE_MAPS_3D_MAP_ID =
@@ -166,7 +165,6 @@ function getCameraStatusColor(status: string) {
 
 export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const lands3DContainerRef = useRef<HTMLIFrameElement>(null);
   const google2DContainerRef = useRef<HTMLDivElement>(null);
   const google3DContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
@@ -891,14 +889,6 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
         <div
           ref={containerRef}
           className={`absolute inset-0 ${isReadOnlySurface ? 'hidden' : ''}`}
-        />
-        {/* Lands 3D - 使用 iframe 內嵌顯示 */}
-        <iframe
-          ref={lands3DContainerRef}
-          title="Lands 3D Map"
-          src={LANDS_3D_URL}
-          className={`absolute inset-0 border-0 ${mapSurface === 'lands-3d' ? '' : 'hidden'}`}
-          referrerPolicy="no-referrer-when-downgrade"
         />
         <div
           ref={google2DContainerRef}
