@@ -130,7 +130,7 @@ function loadGoogleMapsApi(apiKey: string): Promise<GoogleMapsApi> {
     const params = new URLSearchParams({
       key: apiKey,
       v: 'weekly',
-      libraries: 'maps,places',
+      libraries: 'maps,places,maps3d',
       language: 'zh-TW',
       region: 'HK',
       callback: callbackName,
@@ -450,7 +450,8 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
       try {
         setGoogleError(null);
         const google = await loadGoogleMapsApi(GOOGLE_MAPS_API_KEY);
-        // 已在 URL 參數中指定 libraries，不需要再次 importLibrary
+        // 載入 3D 地圖所需 library
+        const { Map3DElement } = await google.maps.importLibrary('maps3d');
         if (cancelled) return;
 
         const center = toGoogleCenter(selectedDept?.mapCenter ?? HK_CENTER);
