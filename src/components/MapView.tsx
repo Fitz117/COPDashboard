@@ -1013,7 +1013,7 @@ export default function MapView({ selectedDept, activeLayers }: MapViewProps) {
               fontFamily: "'JetBrains Mono', monospace",
             }}
           >
-            {surfaceLabel} · {selectedDept ? selectedDept.shortZh : 'OVERVIEW'}
+            {mapSurface.toUpperCase()} · {selectedDept ? selectedDept.shortZh : 'OVERVIEW'}
           </span>
         </div>
 
